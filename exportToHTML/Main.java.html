@@ -1,0 +1,180 @@
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #2aacb8;}
+.s5 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Main.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.*;</span>
+
+<span class="s0">public class </span><span class="s1">Main </span><span class="s2">{</span>
+    <span class="s0">private static </span><span class="s1">Scanner scanner </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+    <span class="s0">private static </span><span class="s1">Map</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">, </span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">agendamentos </span><span class="s2">= </span><span class="s0">new </span><span class="s1">HashMap</span><span class="s2">&lt;&gt;(); </span><span class="s3">// Senha -&gt; Detalhes do agendamento</span>
+    <span class="s0">private static </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">notificacoes </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;(); </span><span class="s3">// Lista de notificações</span>
+
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s0">int </span><span class="s1">opcao</span><span class="s2">;</span>
+        <span class="s0">do </span><span class="s2">{</span>
+            <span class="s1">exibirMenu</span><span class="s2">();</span>
+            <span class="s1">opcao </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s3">// Limpa o buffer</span>
+            <span class="s0">switch </span><span class="s2">(</span><span class="s1">opcao</span><span class="s2">) {</span>
+                <span class="s0">case </span><span class="s4">1 </span><span class="s1">-&gt; fazerAgendamento</span><span class="s2">();</span>
+                <span class="s0">case </span><span class="s4">2 </span><span class="s1">-&gt; cancelarAgendamento</span><span class="s2">();</span>
+                <span class="s0">case </span><span class="s4">3 </span><span class="s1">-&gt; comprarProduto</span><span class="s2">();</span>
+                <span class="s0">case </span><span class="s4">4 </span><span class="s1">-&gt; pagarServico</span><span class="s2">();</span>
+                <span class="s0">case </span><span class="s4">5 </span><span class="s1">-&gt; enviarFeedback</span><span class="s2">();</span>
+                <span class="s0">case </span><span class="s4">6 </span><span class="s1">-&gt; sair</span><span class="s2">();</span>
+                <span class="s0">default </span><span class="s1">-&gt; System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Opção inválida. Tente novamente.&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">while </span><span class="s2">(</span><span class="s1">opcao </span><span class="s2">!= </span><span class="s4">6</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">exibirMenu</span><span class="s2">() {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">===== Menu - Sistema Barbearia =====&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;1. Fazer Agendamento&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;2. Cancelar Agendamento&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;3. Comprar Produto&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;4. Pagar Serviço&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;5. Enviar Feedback&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;6. Sair&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;Escolha uma opção: &quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">fazerAgendamento</span><span class="s2">() {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;Digite seu nome: &quot;</span><span class="s2">);</span>
+        <span class="s1">String nome </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;Escolha o serviço (1- Corte de Barba R$30, 2- Corte de Cabelo R$40): &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">servico </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s3">// Limpa o buffer</span>
+        <span class="s1">String tipoServico </span><span class="s2">= </span><span class="s1">servico </span><span class="s2">== </span><span class="s4">1 </span><span class="s2">? </span><span class="s5">&quot;Corte de Barba&quot; </span><span class="s2">: </span><span class="s5">&quot;Corte de Cabelo&quot;</span><span class="s2">;</span>
+        <span class="s0">double </span><span class="s1">preco </span><span class="s2">= </span><span class="s1">servico </span><span class="s2">== </span><span class="s4">1 </span><span class="s2">? </span><span class="s4">30.0 </span><span class="s2">: </span><span class="s4">40.0</span><span class="s2">;</span>
+
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;Digite a data e hora do agendamento (ex: 15/12/2024 14:00): &quot;</span><span class="s2">);</span>
+        <span class="s1">String dataHora </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;Crie uma senha para o agendamento: &quot;</span><span class="s2">);</span>
+        <span class="s1">String senha </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+        <span class="s1">agendamentos</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s1">senha</span><span class="s2">, </span><span class="s1">tipoServico </span><span class="s2">+ </span><span class="s5">&quot; - R$&quot; </span><span class="s2">+ </span><span class="s1">preco </span><span class="s2">+ </span><span class="s5">&quot; - &quot; </span><span class="s2">+ </span><span class="s1">dataHora</span><span class="s2">);</span>
+        <span class="s1">notificacoes</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s5">&quot;Agendamento criado com sucesso para &quot; </span><span class="s2">+ </span><span class="s1">tipoServico </span><span class="s2">+ </span><span class="s5">&quot; em &quot; </span><span class="s2">+ </span><span class="s1">dataHora</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Agendamento realizado com sucesso!&quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">cancelarAgendamento</span><span class="s2">() {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;Digite a senha do agendamento: &quot;</span><span class="s2">);</span>
+        <span class="s1">String senha </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">agendamentos</span><span class="s2">.</span><span class="s1">containsKey</span><span class="s2">(</span><span class="s1">senha</span><span class="s2">)) {</span>
+            <span class="s1">agendamentos</span><span class="s2">.</span><span class="s1">remove</span><span class="s2">(</span><span class="s1">senha</span><span class="s2">);</span>
+            <span class="s1">notificacoes</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s5">&quot;Agendamento cancelado com sucesso.&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Agendamento cancelado com sucesso!&quot;</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Agendamento não encontrado.&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">comprarProduto</span><span class="s2">() {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Escolha o produto:&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;1. Pomada para Cabelo (R$25)&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;2. Pomada para Barba (R$20)&quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">escolha </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s3">// Limpa o buffer</span>
+
+        <span class="s1">String produto </span><span class="s2">= </span><span class="s1">escolha </span><span class="s2">== </span><span class="s4">1 </span><span class="s2">? </span><span class="s5">&quot;Pomada para Cabelo - R$25&quot; </span><span class="s2">: </span><span class="s5">&quot;Pomada para Barba - R$20&quot;</span><span class="s2">;</span>
+
+        <span class="s3">// Escolha da forma de pagamento</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Escolha a forma de pagamento:&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;1. Cartão&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;2. Pix&quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">pagamentoEscolha </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s3">// Limpa o buffer</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">pagamentoEscolha </span><span class="s2">== </span><span class="s4">1</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Escolha o tipo de cartão:&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;1. Crédito&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;2. Débito&quot;</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">tipoCartao </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s3">// Limpa o buffer</span>
+            <span class="s1">String tipo </span><span class="s2">= </span><span class="s1">tipoCartao </span><span class="s2">== </span><span class="s4">1 </span><span class="s2">? </span><span class="s5">&quot;Crédito&quot; </span><span class="s2">: </span><span class="s5">&quot;Débito&quot;</span><span class="s2">;</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Pagamento via &quot; </span><span class="s2">+ </span><span class="s1">tipo </span><span class="s2">+ </span><span class="s5">&quot; realizado com sucesso.&quot;</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">pagamentoEscolha </span><span class="s2">== </span><span class="s4">2</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Pagamento via Pix realizado com sucesso.&quot;</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Opção de pagamento inválida.&quot;</span><span class="s2">);</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s1">notificacoes</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s5">&quot;Produto comprado: &quot; </span><span class="s2">+ </span><span class="s1">produto</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Compra realizada com sucesso: &quot; </span><span class="s2">+ </span><span class="s1">produto</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">pagarServico</span><span class="s2">() {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;Digite a senha do agendamento: &quot;</span><span class="s2">);</span>
+        <span class="s1">String senha </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">agendamentos</span><span class="s2">.</span><span class="s1">containsKey</span><span class="s2">(</span><span class="s1">senha</span><span class="s2">)) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Detalhes do serviço: &quot; </span><span class="s2">+ </span><span class="s1">agendamentos</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">senha</span><span class="s2">));</span>
+
+            <span class="s3">// Escolha da forma de pagamento</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Escolha a forma de pagamento:&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;1. Cartão&quot;</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;2. Pix&quot;</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">pagamentoEscolha </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s3">// Limpa o buffer</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">pagamentoEscolha </span><span class="s2">== </span><span class="s4">1</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Escolha o tipo de cartão:&quot;</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;1. Crédito&quot;</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;2. Débito&quot;</span><span class="s2">);</span>
+                <span class="s0">int </span><span class="s1">tipoCartao </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+                <span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s3">// Limpa o buffer</span>
+                <span class="s1">String tipo </span><span class="s2">= </span><span class="s1">tipoCartao </span><span class="s2">== </span><span class="s4">1 </span><span class="s2">? </span><span class="s5">&quot;Crédito&quot; </span><span class="s2">: </span><span class="s5">&quot;Débito&quot;</span><span class="s2">;</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Pagamento via &quot; </span><span class="s2">+ </span><span class="s1">tipo </span><span class="s2">+ </span><span class="s5">&quot; realizado com sucesso.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">pagamentoEscolha </span><span class="s2">== </span><span class="s4">2</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Pagamento via Pix realizado com sucesso.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Opção de pagamento inválida.&quot;</span><span class="s2">);</span>
+                <span class="s0">return</span><span class="s2">;</span>
+            <span class="s2">}</span>
+
+            <span class="s1">notificacoes</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s5">&quot;Pagamento realizado para o serviço: &quot; </span><span class="s2">+ </span><span class="s1">agendamentos</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">senha</span><span class="s2">));</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Pagamento realizado com sucesso!&quot;</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Nenhum agendamento encontrado com essa senha.&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">enviarFeedback</span><span class="s2">() {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;Avalie nosso serviço (1 a 5 estrelas): &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">estrelas </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">(); </span><span class="s3">// Limpa o buffer</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">print</span><span class="s2">(</span><span class="s5">&quot;Digite seu comentário: &quot;</span><span class="s2">);</span>
+        <span class="s1">String comentario </span><span class="s2">= </span><span class="s1">scanner</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+        <span class="s1">notificacoes</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s5">&quot;Feedback recebido: &quot; </span><span class="s2">+ </span><span class="s1">estrelas </span><span class="s2">+ </span><span class="s5">&quot; estrelas. Comentário: &quot; </span><span class="s2">+ </span><span class="s1">comentario</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Obrigado pelo feedback!&quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">sair</span><span class="s2">() {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Saindo do sistema... Obrigado!&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;Notificações realizadas:&quot;</span><span class="s2">);</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">String notificacao </span><span class="s2">: </span><span class="s1">notificacoes</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s5">&quot;- &quot; </span><span class="s2">+ </span><span class="s1">notificacao</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
