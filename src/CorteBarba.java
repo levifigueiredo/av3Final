@@ -1,6 +1,6 @@
 public class CorteBarba extends Servico {
     public CorteBarba() {
-        super("Corte de Barba", 30.0); // Preço fixo de R$ 30,00
+        super("Corte de Barba", 30.0);
     }
 
     @Override

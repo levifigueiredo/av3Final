@@ -3,7 +3,6 @@ public class Cliente extends Pessoa {
         super(nome, cpf);
     }
 
-    // Sobrescrevendo toString (Polimorfismo de Sobreposição)
     @Override
     public String toString() {
         return "Cliente [nome=" + nome + ", cpf=" + cpf + "]";

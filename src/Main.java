@@ -1,158 +1,174 @@
 import java.util.*;
 
-public class Main {
+public class Main implements Agendamento, Notificacao, Avaliacao {
     private static Scanner scanner = new Scanner(System.in);
-    private static Map<String, String> agendamentos = new HashMap<>(); // Senha -> Detalhes do agendamento
-    private static List<String> notificacoes = new ArrayList<>(); // Lista de notificações
+    private static Map<String, String> agendamentos = new HashMap<>();
+    private static List<String> notificacoes = new ArrayList<>();
 
     public static void main(String[] args) {
+        Main sistema = new Main();
         int opcao;
         do {
-            exibirMenu();
+            sistema.exibirMenu();
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer
+            scanner.nextLine();
             switch (opcao) {
-                case 1 -> fazerAgendamento();
-                case 2 -> cancelarAgendamento();
-                case 3 -> comprarProduto();
-                case 4 -> pagarServico();
-                case 5 -> enviarFeedback();
-                case 6 -> sair();
-                default -> System.out.println("Opção inválida. Tente novamente.");
+                case 1 -> sistema.fazerAgendamento();
+                case 2 -> sistema.cancelarAgendamento();
+                case 3 -> sistema.comprarProduto();
+                case 4 -> sistema.pagarServico();
+                case 5 -> sistema.enviarFeedback();
+                case 6 -> sistema.sair();
+                default -> System.out.println("Opção inválida.");
             }
         } while (opcao != 6);
     }
 
-    private static void exibirMenu() {
-        System.out.println("\n===== Menu - Sistema Barbearia =====");
-        System.out.println("1. Fazer Agendamento");
-        System.out.println("2. Cancelar Agendamento");
-        System.out.println("3. Comprar Produto");
-        System.out.println("4. Pagar Serviço");
-        System.out.println("5. Enviar Feedback");
-        System.out.println("6. Sair");
+    private void exibirMenu() {
+        System.out.println("Bem vindo a Barbearia Legal!");
+        System.out.println("1) Realizar Agendamento");
+        System.out.println("2) Cancelar Agendamento");
+        System.out.println("3) Produtos");
+        System.out.println("4) Pagar Serviço");
+        System.out.println("5) Feedback");
+        System.out.println("6) Sair Do Menu");
         System.out.print("Escolha uma opção: ");
     }
 
-    private static void fazerAgendamento() {
-        System.out.print("Digite seu nome: ");
+    private void fazerAgendamento() {
+        System.out.print("Informe seu nome: ");
         String nome = scanner.nextLine();
-        System.out.print("Escolha o serviço (1- Corte de Barba R$30, 2- Corte de Cabelo R$40): ");
+        System.out.print("Escolha seu serviço (1- Barba R$30, 2- Cabelo R$40): ");
         int servico = scanner.nextInt();
-        scanner.nextLine(); // Limpa o buffer
-        String tipoServico = servico == 1 ? "Corte de Barba" : "Corte de Cabelo";
+        scanner.nextLine();
+        String tipoServico = servico == 1 ? "Barba" : "Cabelo";
         double preco = servico == 1 ? 30.0 : 40.0;
 
-        System.out.print("Digite a data e hora do agendamento (ex: 15/12/2024 14:00): ");
+        System.out.print("Informe a data e a hora do seu agendamento: ");
         String dataHora = scanner.nextLine();
-        System.out.print("Crie uma senha para o agendamento: ");
+        System.out.print("Escolha uma senha para o seu agendamento: ");
         String senha = scanner.nextLine();
 
-        agendamentos.put(senha, tipoServico + " - R$" + preco + " - " + dataHora);
-        notificacoes.add("Agendamento criado com sucesso para " + tipoServico + " em " + dataHora);
-        System.out.println("Agendamento realizado com sucesso!");
+        agendarHorario(nome, tipoServico + " - R$" + preco, dataHora, senha);
     }
 
-    private static void cancelarAgendamento() {
-        System.out.print("Digite a senha do agendamento: ");
+    private void cancelarAgendamento() {
+        System.out.print("Informe a senha de agendamento: ");
         String senha = scanner.nextLine();
-
-        if (agendamentos.containsKey(senha)) {
-            agendamentos.remove(senha);
-            notificacoes.add("Agendamento cancelado com sucesso.");
-            System.out.println("Agendamento cancelado com sucesso!");
-        } else {
-            System.out.println("Agendamento não encontrado.");
-        }
+        cancelarHorario(senha);
     }
 
-    private static void comprarProduto() {
-        System.out.println("Escolha o produto:");
-        System.out.println("1. Pomada para Cabelo (R$25)");
-        System.out.println("2. Pomada para Barba (R$20)");
+    private void comprarProduto() {
+        System.out.println("Produtos Disponíveis:");
+        System.out.println("1. Gel de Pentear (R$25)");
+        System.out.println("2. Minoxidil (R$20)");
         int escolha = scanner.nextInt();
-        scanner.nextLine(); // Limpa o buffer
+        scanner.nextLine();
 
-        String produto = escolha == 1 ? "Pomada para Cabelo - R$25" : "Pomada para Barba - R$20";
+        String produto = escolha == 1 ? "Gel de Pentear - R$25" : "Minoxidil - R$20";
 
-        // Escolha da forma de pagamento
         System.out.println("Escolha a forma de pagamento:");
         System.out.println("1. Cartão");
         System.out.println("2. Pix");
         int pagamentoEscolha = scanner.nextInt();
-        scanner.nextLine(); // Limpa o buffer
+        scanner.nextLine();
 
         if (pagamentoEscolha == 1) {
             System.out.println("Escolha o tipo de cartão:");
             System.out.println("1. Crédito");
             System.out.println("2. Débito");
             int tipoCartao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer
+            scanner.nextLine();
             String tipo = tipoCartao == 1 ? "Crédito" : "Débito";
-            System.out.println("Pagamento via " + tipo + " realizado com sucesso.");
+            enviarNotificacao("Pagamento via " + tipo + " realizado para " + produto);
         } else if (pagamentoEscolha == 2) {
-            System.out.println("Pagamento via Pix realizado com sucesso.");
+            enviarNotificacao("Pagamento via Pix realizado para " + produto);
         } else {
             System.out.println("Opção de pagamento inválida.");
             return;
         }
 
-        notificacoes.add("Produto comprado: " + produto);
         System.out.println("Compra realizada com sucesso: " + produto);
     }
 
-    private static void pagarServico() {
+    private void pagarServico() {
         System.out.print("Digite a senha do agendamento: ");
         String senha = scanner.nextLine();
 
         if (agendamentos.containsKey(senha)) {
             System.out.println("Detalhes do serviço: " + agendamentos.get(senha));
 
-            // Escolha da forma de pagamento
             System.out.println("Escolha a forma de pagamento:");
             System.out.println("1. Cartão");
             System.out.println("2. Pix");
             int pagamentoEscolha = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer
+            scanner.nextLine();
 
             if (pagamentoEscolha == 1) {
                 System.out.println("Escolha o tipo de cartão:");
                 System.out.println("1. Crédito");
                 System.out.println("2. Débito");
                 int tipoCartao = scanner.nextInt();
-                scanner.nextLine(); // Limpa o buffer
+                scanner.nextLine();
                 String tipo = tipoCartao == 1 ? "Crédito" : "Débito";
-                System.out.println("Pagamento via " + tipo + " realizado com sucesso.");
+                enviarNotificacao("Pagamento via " + tipo + " realizado para o serviço.");
             } else if (pagamentoEscolha == 2) {
-                System.out.println("Pagamento via Pix realizado com sucesso.");
+                enviarNotificacao("Pagamento via Pix realizado para o serviço.");
             } else {
                 System.out.println("Opção de pagamento inválida.");
                 return;
             }
 
-            notificacoes.add("Pagamento realizado para o serviço: " + agendamentos.get(senha));
             System.out.println("Pagamento realizado com sucesso!");
         } else {
             System.out.println("Nenhum agendamento encontrado com essa senha.");
         }
     }
 
-    private static void enviarFeedback() {
+    private void enviarFeedback() {
         System.out.print("Avalie nosso serviço (1 a 5 estrelas): ");
         int estrelas = scanner.nextInt();
-        scanner.nextLine(); // Limpa o buffer
+        scanner.nextLine();
         System.out.print("Digite seu comentário: ");
         String comentario = scanner.nextLine();
-
-        notificacoes.add("Feedback recebido: " + estrelas + " estrelas. Comentário: " + comentario);
-        System.out.println("Obrigado pelo feedback!");
+        avaliarServico(estrelas, comentario);
     }
 
-    private static void sair() {
-        System.out.println("Saindo do sistema... Obrigado!");
-        System.out.println("Notificações realizadas:");
+    private void sair() {
+        System.out.println("Obrigado por escolher a Barbearia Legal!");
+        System.out.println("Notificações:");
         for (String notificacao : notificacoes) {
             System.out.println("- " + notificacao);
         }
+    }
+
+    @Override
+    public void agendarHorario(String cliente, String servico, String dataHora, String senha) {
+        agendamentos.put(senha, servico + " - " + dataHora);
+        enviarNotificacao("Agendamento marcado: " + cliente + ": " + servico + " em " + dataHora);
+        System.out.println("Agendamento realizado com sucesso!");
+    }
+
+    @Override
+    public boolean cancelarHorario(String senha) {
+        if (agendamentos.containsKey(senha)) {
+            agendamentos.remove(senha);
+            enviarNotificacao("Agendamento cancelado com sucesso.");
+            System.out.println("Agendamento cancelado com sucesso!");
+        } else {
+            System.out.println("Agendamento não encontrado.");
+        }
+        return false;
+    }
+
+    @Override
+    public void enviarNotificacao(String mensagem) {
+        notificacoes.add(mensagem);
+    }
+
+    @Override
+    public void avaliarServico(int estrelas, String comentario) {
+        enviarNotificacao("Feedback recebido: " + estrelas + " estrelas. Comentário: " + comentario);
+        System.out.println("Obrigado pelo feedback!");
     }
 }

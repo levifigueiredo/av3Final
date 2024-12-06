@@ -1,5 +1,5 @@
 public class Cartao extends Pagamento {
-    private String tipoCartao; // Débito ou Crédito
+    private String tipoCartao;
 
     public Cartao(double valor, String tipoCartao) {
         super(valor);
@@ -14,13 +14,11 @@ public class Cartao extends Pagamento {
         this.tipoCartao = tipoCartao;
     }
 
-    // Sobrescrevendo toString (Polimorfismo de Sobreposição)
     @Override
     public String toString() {
         return "Cartao [valor=" + valor + ", tipoCartao=" + tipoCartao + "]";
     }
 
-    // Sobrecarga: Definir valor do pagamento
     public void definirValor(double valor) {
         this.valor = valor;
     }
