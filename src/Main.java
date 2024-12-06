@@ -25,7 +25,7 @@ public class Main implements Agendamento, Notificacao, Avaliacao {
     }
 
     private void exibirMenu() {
-        System.out.println("Bem vindo a Barbearia Legal!");
+        System.out.println("Menu - Barbearia Legal");
         System.out.println("1) Realizar Agendamento");
         System.out.println("2) Cancelar Agendamento");
         System.out.println("3) Produtos");
